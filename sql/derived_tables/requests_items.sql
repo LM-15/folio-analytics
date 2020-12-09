@@ -22,7 +22,7 @@ SELECT
     ug.desc AS patron_group_name,
     ii.item_level_call_number,
     ii.barcode,
-    ii.chronology,
+    json_extract_path_text(ii.data, 'chronology') AS chronology,
     ii.copy_number AS item_copy_number,
     ii.effective_location_id AS item_effective_location_id,
     iel.name AS item_effective_location_name,
@@ -30,16 +30,16 @@ SELECT
     ipl.name AS item_permanent_location_name,
     json_extract_path_text(ii.data, 'temporaryLocationId') AS item_temporary_location_id,
     itl.name AS item_temporary_location_name,
-    ii.enumeration,
+    json_extract_path_text(ii.data, 'enumeration') AS enumeration,
     ii.holdings_record_id,
     ii.hrid,
     json_extract_path_text(ii.data, 'itemIdentifier') AS item_identifier,
     ii.material_type_id,
     imt.name AS material_type_name,
-    ii.number_of_pieces,
+    json_extract_path_text(ii.data, 'numberOfPieces') AS number_of_pieces,
     ii.permanent_loan_type_id AS item_permanent_loan_type_id,
     iplt.name AS item_permanent_loan_type_name,
-    ii.temporary_loan_type_id AS item_temporary_loan_type_id,
+    json_extract_path_text(ii.data, 'temporaryLoanTypeId') AS item_temporary_loan_type_id,
     itlt.name AS item_temporary_loan_type_name
 FROM
     public.circulation_requests AS cr
@@ -52,7 +52,7 @@ FROM
     LEFT JOIN inventory_locations AS ipl ON ii.permanent_location_id = ipl.id
     LEFT JOIN inventory_locations AS itl ON json_extract_path_text(ii.data, 'temporaryLocationId') = itl.id
     LEFT JOIN inventory_loan_types AS iplt ON ii.permanent_loan_type_id = iplt.id
-    LEFT JOIN inventory_loan_types AS itlt ON ii.temporary_loan_type_id = itlt.id
+    LEFT JOIN inventory_loan_types AS itlt ON json_extract_path_text(ii.data, 'temporaryLoanTypeId') = itlt.id
     LEFT JOIN inventory_material_types AS imt ON ii.material_type_id = imt.id;
 
 CREATE INDEX ON folio_reporting.requests_items (request_id);
