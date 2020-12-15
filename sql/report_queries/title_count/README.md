@@ -7,6 +7,7 @@
 * [Output](https://github.com/LM-15/folio-analytics/blob/update-query-readme-files/sql/report_queries/title_count/README.md#output)
 * [Requests not yet addressed](https://github.com/LM-15/folio-analytics/blob/update-query-readme-files/sql/report_queries/title_count/README.md#requests-not-yet-addressed) 
 
+https://github.com/folio-org/folio-analytics/blob/master/sql/report_queries/title_count/README.md#status
 
 ## Status
 As of 11/18/20, this query has been reviewed, but it is being updated to use the relevant derived tables.
